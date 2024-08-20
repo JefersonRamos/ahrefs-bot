@@ -8,14 +8,21 @@ const auth = new google.auth.GoogleAuth({
     scopes: [process.env.scope]
 })
 
-
-
 async function readSheet() {
 
     const client = await auth.getClient()
     const sheets = google.sheets({ version: 'v4', auth: client })
     const spreadsheetId = process.env.SHEET_ID
-    const range = 'Página1!A2:E3'
+
+    if(!process.env.npm_config_page || !process.env.npm_config_page) {
+        return console.error("Parâmetro pagina não encontrado, por favor especificar a página da seguinte forma: \"npm run dev --column=A2:B2 --page=Página1\"")
+    }
+
+    if(!process.env.npm_config_column || !process.env.npm_config_column) {
+        return console.error("Parâmetro column não encontrado, por favor especificar a coluna da seguinte forma: \"npm run dev --column=A2:B2 --page=Página1\"")
+    }
+
+    const range = `${process.env.npm_config_page}!${process.env.npm_config_column}`
 
     const response = await sheets.spreadsheets.values.get({
         spreadsheetId,
@@ -30,9 +37,8 @@ async function readSheet() {
 
     const ahrefs = require('./Service/Ahrefs')
 
-    const [ domainRating, domainAuthority ] = await Promise.all([
+    const [ domainRating ] = await Promise.all([
         await Integrations.setDR(rows, ahrefs),
-        await Integrations.setDA(rows, ahrefs)
     ])
 
     const request = {
@@ -44,7 +50,6 @@ async function readSheet() {
 
                 if(row[0] && row[0].length > 0) {
 
-                    row[2] = domainAuthority[row[4]]
                     row[3] = domainRating[row[4]]
                 }
 

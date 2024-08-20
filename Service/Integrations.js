@@ -12,20 +12,6 @@ const Integrations = {
         }))
 
         return listDR
-    },
-
-    setDA: async (rows, integration) => {
-
-        const listDA = {}
-
-        await Promise.all(rows.map(async (row, index) => {
-
-            const [ value, niche, da, dr, url ] = row
-
-            listDA[url] = await integration.getDa(da)
-        }))
-
-        return listDA
     }
 }
 
