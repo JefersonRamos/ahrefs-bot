@@ -1,0 +1,16 @@
+{
+  "name": "ahrefs-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --env-file=.env index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
+    "axios": "^1.7.4",
+    "googleapis": "^105.0.0"
+  }
+}
