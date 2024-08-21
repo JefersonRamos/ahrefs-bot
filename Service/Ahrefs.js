@@ -37,11 +37,14 @@ module.exports = {
             output: 'json',
             token: process.env.AHREFS_TOKEN
         }
+
         const response = await axios.get('/', { params })
 
         if(response.status !== 200) return 'Invalid'
 
         const { metrics } = response.data
+
+        metrics.traffic = Math.trunc(metrics.traffic)
 
         return metrics.traffic
     },
