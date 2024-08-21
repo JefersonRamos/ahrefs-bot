@@ -43,8 +43,6 @@ module.exports = {
 
         const { metrics } = response.data
 
-        console.log(response.data)
-
         return metrics.traffic
     },
 }
