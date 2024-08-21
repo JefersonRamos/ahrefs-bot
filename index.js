@@ -37,23 +37,22 @@ async function readSheet() {
 
     const ahrefs = require('./Service/Ahrefs')
 
-    const [ domainRating ] = await Promise.all([
+    const [ domainRating,position_metrics ] = await Promise.all([
         await Integrations.setDR(rows, ahrefs),
+        await Integrations.setTraffic(rows, ahrefs),
     ])
-
     const request = {
         spreadsheetId,
         range,
         valueInputOption: 'RAW',
         resource: {
             values: response.data.values.map((row) => {
-
-                if(row[0] && row[0].length > 0) {
-
-                    row[3] = domainRating[row[4]]
+                if (row[0] && row[0].length > 0) {
+                    row[3] = domainRating[row[5]];
+                    row[4] = position_metrics[row[5]];
                 }
-
-                return row
+                console.log(row)
+                return row;
             }),
         },
     };

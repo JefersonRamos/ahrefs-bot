@@ -25,5 +25,26 @@ module.exports = {
         const { domain } = response.data
 
         return domain.domain_rating
-    }
+    },
+
+    getTraffic: async (url) => {
+
+        const params = {
+
+            from: 'positions_metrics',
+            target: url,
+            mode: 'subdomains',
+            output: 'json',
+            token: process.env.AHREFS_TOKEN
+        }
+        const response = await axios.get('/', { params })
+
+        if(response.status !== 200) return 'Invalid'
+
+        const { metrics } = response.data
+
+        console.log(response.data)
+
+        return metrics.traffic
+    },
 }
