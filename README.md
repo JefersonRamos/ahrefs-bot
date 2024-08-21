@@ -1,3 +1,3 @@
 // Execução do script
 
-npm run dev --column=A2:E44 --page=Página1
+npm run start --column=A2:E44 --page=Página1
