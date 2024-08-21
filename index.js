@@ -29,7 +29,7 @@ async function readSheet() {
         range,
     })
 
-    const rows = response.data.values.filter((row) => row[0] && row[0].length > 0)
+    const rows = response.data.values.filter((row) => row[0] && row[0].length > 0 && row[5] && row[5].length > 0)
 
     if(rows.length === 0) return
 
@@ -51,11 +51,12 @@ async function readSheet() {
                     row[3] = domainRating[row[5]];
                     row[4] = position_metrics[row[5]];
                 }
-                console.log(row)
                 return row;
             }),
         },
     };
+
+    console.log("Planilha atualizada com sucesso")
 
     return await sheets.spreadsheets.values.update(request)
 }
